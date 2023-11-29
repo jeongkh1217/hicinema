@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+
+<servlet>
+<servlet-name>Contr</servlet-name>
+<servlet-class>controller.Contr</servlet-class>
+</servlet>
+
+
+<servlet-mapping>
+<servlet-name>Contr</servlet-name>
+<url-pattern>*.hic</url-pattern>
+</servlet-mapping>
+
+<servlet>
+<servlet-name>Contrmvc2</servlet-name>
+<servlet-class>controller.Contrmvc2</servlet-class>
+</servlet>
+
+
+<servlet-mapping>
+<servlet-name>Contrmvc2</servlet-name>
+<url-pattern>*.hci</url-pattern>
+</servlet-mapping>
+
+</web-app>

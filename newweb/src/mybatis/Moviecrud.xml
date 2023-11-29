@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="selectgoname">
+	<select id="selectmovietotalview"
+		resultType="hicinema.movie.vo.Moviegetset">
+		select * from movie order by totalview desc
+	</select>
+	<select id="selectmoviemovietitle"
+		resultType="hicinema.movie.vo.Moviegetset">
+		select * from movie order by movietitle 
+	</select>
+	<select id="selectmoviereleasedate"
+		resultType="hicinema.movie.vo.Moviegetset">
+		select * from movie order by releasedate desc
+	</select>
+	<select id="selectmovieratingvalue" resultType="hicinema.movie.vo.Moviegetset">
+		select * from movie order by ratingvalue desc
+	</select>
+	<select id="selectwheremovie"
+		resultType="hicinema.movie.vo.Moviegetset">
+		select * from movie where movieid = #{movieid}
+	</select>
+	<select id="selecttotalviewmovie" resultType="int">
+		select sum(totalview) from movie
+	</select>
+	<select id="totalcountmovielike" resultType="int">
+		select count(*) from movielike where movieid=#{movieid}
+	</select>
+	<select id="insertmovie">
+		insert into
+		movie(movieid,movietitle,director,starring,genre,synopsis,runningtime,rating,releasedate,totalview)
+		values
+		(#{movieid},#{movietitle},#{director},#{starring},#{genre},#{synopsis},#{runningtime},#{rating},#{releasedate},#{totalview})
+	</select>
+	<select id="updatemovieratingvalue">
+		update movie set ratingvalue=#{ratingvalue} where movieid=#{movieid};	
+	</select>
+	<select id="selectsnc" resultType="hicinema.snc.vo.SnCgetset">
+		select * from starrating where movieid = #{movieid} order by commentlike desc, writtendatetime desc limit #{offset},#{limit}
+	</select>
+	<select id="selectsncaverage" resultType="double">
+		select round(avg(starrating),2) from starrating where movieid=#{movieid}
+	</select>
+	<select id="checksnc" parameterType="map" resultType="int">
+		select count(*) from starrating where id=#{id} and movieid=#{movieid}
+	</select>
+	<select id="checksnclike" parameterType="map" resultType="int">
+		select count(*) from starratinglike where sncno=#{sncno} and id=#{id}
+	</select>
+	<select id ="countsnc" resultType="int">
+		select count(*) from starrating where movieid=#{movieid}
+	</select>
+	<select id="insertsnclike" parameterType="map">
+		insert  into starratinglike(sncno,id) values(#{sncno},#{id})
+	</select>
+	<select id="deletesnclike" parameterType="map">
+		delete from starratinglike where sncno=#{sncno} and id=#{id}
+	</select>
+	<select id="deleteallnosnclike" parameterType="int">
+		delete from starratinglike where sncno=#{sncno}
+	</select>
+	<select id="plussnclike" parameterType="int">
+		update starrating set commentlike=commentlike+1 where sncno=#{sncno};	
+	</select>
+	<select id="minussnclike" parameterType="int">
+		update starrating set commentlike=commentlike-1 where sncno=#{sncno};	
+	</select>	
+	<select id="totalcountsnclike" parameterType="int" resultType="int">
+		select count(*) from starratinglike where sncno=#{sncno}
+	</select>
+	<select id="selecttheater" resultType="hicinema.theater.vo.Theatergetset">
+		select * from theater
+	</select>
+	<select id="selectwheretheater" resultType="hicinema.theater.vo.Theatergetset">
+		select theatername from theater where movieid=#{movieid}
+	</select>
+	<select id="selecttimewheretheater" parameterType="map" resultType="hicinema.theater.vo.Theatergetset">
+		select * from theater where movieid = #{movieid} and theatername = #{theatername};
+	</select>
+	<select id="selectleftseat" parameterType="map" resultType="int">
+		select count(seat) from reservation where theater=#{theater} and time=#{time} and date=#{date}
+	</select>
+	
+</mapper>
